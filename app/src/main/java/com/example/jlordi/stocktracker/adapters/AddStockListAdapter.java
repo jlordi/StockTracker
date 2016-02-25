@@ -80,7 +80,7 @@ public class AddStockListAdapter extends RecyclerView.Adapter<AddStockListAdapte
 
             Stock stock = new Stock(stockSymbol.getText().toString(), stockName.getText().toString(), stockExchange.getText().toString());
             appInstance = new StockTrackerAppInstance();
-            if (appInstance.AddStock(stock)) {
+            if (appInstance.AddStock(stock, mContext)) {
                 Toast.makeText(mContext, "Inserted Record", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(mContext, "Unable to insert record", Toast.LENGTH_LONG).show();
