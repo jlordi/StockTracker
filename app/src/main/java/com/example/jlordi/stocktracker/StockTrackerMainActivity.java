@@ -161,14 +161,16 @@ public class StockTrackerMainActivity extends Activity {
             @Override
             public void onResponse(Response<StockQuote> response) {
                 StockQuote quote = response.body();
-                Log.d("JEL", "Name: " + quote.getName());
-                Log.d("JEL", "Symbol: " + quote.getSymbol());
-                Log.d("JEL", "Status: " + quote.getStatus());
-                Log.d("JEL", "Last Price: " + String.valueOf(quote.getLastPrice()));
-                Log.d("JEL", "Change: " + String.valueOf(quote.getChange()));
-                StockQuote.setLastPrice(quote.getLastPrice());
-                StockQuote.setChange(quote.getChange());
-                StockQuote.setChangePercent(quote.getChangePercent());
+                if (quote != null) {
+                    Log.d("JEL", "Name: " + quote.getName());
+                    Log.d("JEL", "Symbol: " + quote.getSymbol());
+                    Log.d("JEL", "Status: " + quote.getStatus());
+                    Log.d("JEL", "Last Price: " + String.valueOf(quote.getLastPrice()));
+                    Log.d("JEL", "Change: " + String.valueOf(quote.getChange()));
+                    StockQuote.setLastPrice(quote.getLastPrice());
+                    StockQuote.setChange(quote.getChange());
+                    StockQuote.setChangePercent(quote.getChangePercent());
+                }
             }
 
             @Override
