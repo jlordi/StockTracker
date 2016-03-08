@@ -141,7 +141,7 @@ public class StockDatabaseAdapter extends SQLiteOpenHelper {
     // Methods for Items
     public List<StockQuote> getAllStockQuotesList() {
         String[] STOCK_COLUMNS = new String[]
-                {STOCK_KEY_ROWID, STOCK_NAME, STOCK_SYMBOL, STOCK_EXCHANGE};
+                {STOCK_KEY_ROWID, STOCK_NAME, STOCK_SYMBOL, STOCK_EXCHANGE, STOCK_KEY_ROWID};
 
         Cursor cursor = mdb.query(STOCK_TABLE,
                 STOCK_COLUMNS,
@@ -154,7 +154,9 @@ public class StockDatabaseAdapter extends SQLiteOpenHelper {
             Log.d("JEL1", cursor.getString(cursor.getColumnIndex(STOCK_SYMBOL)));
             Log.d("JEL1", cursor.getString(cursor.getColumnIndex(STOCK_NAME)));
 
-            stockQuoteList.add(new StockQuote(cursor.getString(cursor.getColumnIndex(STOCK_SYMBOL)), cursor.getString(cursor.getColumnIndex(STOCK_NAME))));
+            stockQuoteList.add(new StockQuote(cursor.getString(cursor.getColumnIndex(STOCK_SYMBOL)),
+                            cursor.getString(cursor.getColumnIndex(STOCK_NAME)),
+                            cursor.getInt(cursor.getColumnIndex(STOCK_KEY_ROWID))));
         }
         return stockQuoteList;
     }
@@ -206,14 +208,15 @@ public class StockDatabaseAdapter extends SQLiteOpenHelper {
         return mdb.delete(STOCK_TABLE, STOCK_KEY_ROWID + "=" + rowId, null) > 0;
     }
 
-    public boolean updateItemRecord(long rowId, String card_name,
-                                    String card_details) {
-        //ContentValues ItemArgs = new ContentValues();
-        //ItemArgs.put(CARD_NAME, card_name);
-        //ItemArgs.put(CARD_LASTFOUR, card_details);
-        //return mDb.update(CARD_TABLE, ItemArgs, CARD_KEY_ROWID + "=" + rowId,
-        //        null) > 0;
-        return true;
+    public boolean updateItemRecord(long rowId, StockQuote quote) {
+        ContentValues ItemArgs = new ContentValues();
+
+        //ItemArgs.put(STOCK_LAST_PRICE, quote.getLastPrice());
+        ItemArgs.put(STOCK_CHANGE, quote.getChange());
+        ItemArgs.put(STOCK_CHANGE_PERCENT, quote.getChangePercent());
+
+        return mdb.update(STOCK_TABLE, ItemArgs, STOCK_KEY_ROWID + "=" + rowId,
+                null) > 0;
     }
 
     public boolean updateItemPosition(long rowId, Integer position) {

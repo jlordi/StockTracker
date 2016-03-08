@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.jlordi.stocktracker.models.StockQuote;
 import com.example.lordij.mystocktrackerapp.R;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,6 +30,12 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.Cust
         inflator = LayoutInflater.from(context);
         this.StockQuoteList = stockQuoteList;
         this.mContext = context;
+    }
+
+    public void updateData(ArrayList<StockQuote> StockQuoteList) {
+        StockQuoteList.clear();
+        StockQuoteList.addAll(StockQuoteList);
+        notifyDataSetChanged();
     }
 
     @Override

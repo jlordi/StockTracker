@@ -86,15 +86,17 @@ public class AddStockActivity extends Activity {
             @Override
             public void onResponse(Response<List<Stock>> response) {
                 List<Stock> stocks = response.body();
-                for (Stock stock : stocks) {
-                    Log.d("JEL", "Name: " + stock.getName());
-                    Log.d("JEL", "Symbol: " + stock.getSymbol());
-                    Log.d("JEL", "Exchange: " + stock.getexchange());
-                }
+                if (stocks != null) {
+                    for (Stock stock : stocks) {
+                        Log.d("JEL", "Name: " + stock.getName());
+                        Log.d("JEL", "Symbol: " + stock.getSymbol());
+                        Log.d("JEL", "Exchange: " + stock.getexchange());
+                    }
 
-                stockListAdapter = new AddStockListAdapter(mctxt, stocks);
-                mRecyclerView.setAdapter(stockListAdapter);
-                mRecyclerView.setLayoutManager(new LinearLayoutManager(mctxt));
+                    stockListAdapter = new AddStockListAdapter(mctxt, stocks);
+                    mRecyclerView.setAdapter(stockListAdapter);
+                    mRecyclerView.setLayoutManager(new LinearLayoutManager(mctxt));
+                }
             }
 
             @Override

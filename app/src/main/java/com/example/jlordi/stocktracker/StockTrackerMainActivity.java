@@ -51,6 +51,8 @@ public class StockTrackerMainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_tracker_main);
 
+        StockDatabaseAdapter dba = StockDatabaseAdapter.getInstance(StockTrackerMainActivity.this);
+        appInstance = new StockTrackerAppInstance();
         //TextView = (TextView) findViewById(R.id.textView);
 
         AddButton = (Button) findViewById(R.id.AddButton);
@@ -66,7 +68,7 @@ public class StockTrackerMainActivity extends Activity {
         UpdateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updatePrice();
+                updatePrices();
             }
         });
 
@@ -76,6 +78,14 @@ public class StockTrackerMainActivity extends Activity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         setStockList(StockTrackerMainActivity.this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+        setStockList(StockTrackerMainActivity.this);
+        updatePrices();
+
     }
 
     @Override
@@ -247,18 +257,17 @@ public class StockTrackerMainActivity extends Activity {
             Log.d("JEL", "Symbol: " + stockQuote.getSymbol());
         }
 
+
         stockListAdapter = new StockListAdapter(mctxt, stockQuoteList);
         mRecyclerView.setAdapter(stockListAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mctxt));
-
     }
 
-    private void updatePrice() {
-
+    private void updatePrices() {
         for (StockQuote stockQuote : stockQuoteList) {
             Log.d("JEL", "Name: " + stockQuote.getName());
             Log.d("JEL", "Symbol: " + stockQuote.getSymbol());
-            requestStockQuote(stockQuote);
+            appInstance.requestStockQuote(stockQuote, mRecyclerView);
         }
 
         updateStockList();
