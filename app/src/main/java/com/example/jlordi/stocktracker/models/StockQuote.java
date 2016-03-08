@@ -1,6 +1,8 @@
 package com.example.jlordi.stocktracker.models;
 
 import java.text.NumberFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * Created by lordij on 2/4/2016.
@@ -21,10 +23,20 @@ public class StockQuote {
     private double Low;
     private double Open;
 
+    @JsonIgnore
+    private Integer rowID;
+
     public StockQuote(String symbol, String name) {
         this.Symbol = symbol;
         this.Name = name;
     }
+
+    public StockQuote(String symbol, String name, int RowId) {
+        this.Symbol = symbol;
+        this.Name = name;
+        this.rowID = Integer.valueOf(RowId);
+    }
+
 
     public String getStatus() {
         return this.Status;
@@ -81,6 +93,13 @@ public class StockQuote {
     public void setChangePercent(double ChangePercent) {
         this.ChangePercent = ChangePercent;
     }
+
+    public Integer getRowId() {return this.rowID;}
+
+    public void setRowId(Integer RowId) {
+        this.rowID = RowId;
+    }
+
 
     @Override
     public String toString() {
