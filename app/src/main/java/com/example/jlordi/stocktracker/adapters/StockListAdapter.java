@@ -5,11 +5,13 @@ package com.example.jlordi.stocktracker.adapters;
  */
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +58,18 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.Cust
         customViewHolder.stockSymbol.setText(stockQuoteItem.getSymbol());
         customViewHolder.stockPrice.setText(stockQuoteItem.getFormattedLastPrice());
         customViewHolder.stockChange.setText(stockQuoteItem.getFormattedChange());
+
+        if (stockQuoteItem.getChange() > 0) {
+            customViewHolder.stockPriceLayout.setBackgroundColor(Color.parseColor("#fd1ac03b"));
+//            customViewHolder.stockNameLayout.setBackgroundColor(Color.GREEN);
+        }else if (stockQuoteItem.getChange() < 0) {
+            customViewHolder.stockPriceLayout.setBackgroundColor(Color.parseColor("#e3f04949"));
+//            customViewHolder.stockNameLayout.setBackgroundColor(Color.RED);
+        } else {
+            customViewHolder.stockPriceLayout.setBackgroundColor(Color.WHITE);
+//            customViewHolder.stockNameLayout.setBackgroundColor(Color.WHITE);
+        }
+
         Log.d("JEL", String.valueOf(stockQuoteItem.getChange()));
     }
 
@@ -70,6 +84,8 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.Cust
         TextView stockSymbol;
         TextView stockPrice;
         TextView stockChange;
+        LinearLayout stockPriceLayout;
+        LinearLayout stockNameLayout;
 
         public CustomViewHolder(View itemView) {
             super(itemView);
@@ -77,6 +93,8 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.Cust
             stockSymbol = (TextView) itemView.findViewById(R.id.StockSymbol);
             stockPrice = (TextView) itemView.findViewById(R.id.StockPrice);
             stockChange = (TextView) itemView.findViewById(R.id.StockChange);
+            stockPriceLayout = (LinearLayout) itemView.findViewById(R.id.StockPriceLayout);
+            stockNameLayout = (LinearLayout) itemView.findViewById(R.id.StockNameLayout);
 
 
             stockName.setOnClickListener(this);
